@@ -1,0 +1,133 @@
+unit uGlobals;
+
+interface
+
+uses
+	Windows,
+   Messages,
+   SysUtils,
+   Forms,
+   uApiSpy;
+
+  	procedure LoadAPIInfo();
+  	procedure SaveAPIInfo();
+   function  TrimNull(s : String) : String;
+   procedure HideFromTaskbar(Handle : HWND; Value: Boolean);
+   procedure HideFromTaskbar2(const Handle: THandle; const SetAppWindow, RestoreVisibility: Boolean);
+   function GetPercentage(Val1 : Integer; Val2 : Integer) : String;
+
+var
+	bReportLoaded : Boolean;
+
+implementation
+
+procedure LoadAPIInfo();
+var
+	F        : File of TAPIINFO;
+   AIRecord : TAPIINFO;
+begin
+   FileMode := fmOpenRead;
+	AssignFile(F, GetCurrentDir() + '\AI.dat');
+   Reset(F);
+
+   try
+   	while not (EOF(F)) do
+      begin
+         Read(F, AIRecord);
+         SetLength(AI, High(AI) + 2);
+         AI[High(AI)] := AIRecord;
+      end;
+   finally
+   	CloseFile(F);
+   end;
+end;
+
+procedure SaveAPIInfo();
+var
+	n : Integer;
+	F : File of TAPIINFO;
+begin
+	AssignFile(F, GetCurrentDir() + '\AI.dat');
+   ReWrite(F);
+
+   try
+   	for n := Low(AI) to High(AI) do
+      begin
+         Write(F, AI[n]);
+      end;
+   finally
+   	CloseFile(F);
+   end;
+end;
+
+function TrimNull(s : String) : String;
+begin
+	if (Pos(#00, s) > 0) then
+   begin
+   	Result := Copy(s, 1, Pos(#00, s) - 1);
+   end else
+   begin
+      Result := s;
+   end;
+end;
+
+procedure HideFromTaskbar(Handle : HWND; Value: Boolean);
+var
+   Style  : Integer;
+begin
+   ShowWindow(Handle, SW_HIDE);
+
+   Style := GetWindowLong(Handle, GWL_EXSTYLE);
+   if (Value = true) then
+   begin
+      SetWindowLong(Handle, GWL_EXSTYLE, Style and not WS_EX_APPWINDOW);
+   end else
+   begin
+      SetWindowLong(Handle, GWL_EXSTYLE, Style or WS_EX_APPWINDOW);
+   end;
+
+   ShowWindow(Handle, SW_SHOW);
+end;
+
+procedure HideFromTaskbar2(const Handle: THandle; const SetAppWindow, RestoreVisibility: Boolean);
+var
+  Style: Integer;
+  WasVisible, WasIconic: Boolean;
+begin
+  Style := GetWindowLong(Handle, GWL_EXSTYLE);
+  Style := Style or WS_EX_NOACTIVATE;
+  WasIconic := Windows.IsIconic(Handle);
+  WasVisible := IsWindowVisible(Handle);
+  if WasVisible or WasIconic then
+    ShowWindow(Handle, SW_HIDE);
+  if SetAppWindow then
+    SetWindowLong(Handle, GWL_EXSTYLE, Style or WS_EX_APPWINDOW)
+  else
+    SetWindowLong(Handle, GWL_EXSTYLE, Style and not WS_EX_APPWINDOW);
+  if (RestoreVisibility and WasVisible) or WasIconic then
+  begin
+    if WasIconic then
+      ShowWindow(Handle, SW_MINIMIZE)
+    else
+      ShowWindow(Handle, SW_SHOW);
+  end;
+end;
+
+function GetPercentage(Val1 : Integer; Val2 : Integer) : String;
+var
+	dFloat  : Double;
+   szFloat : String;
+begin
+   dFloat := ((Val1 / Val2) * 100);
+   szFloat := FloatToStr(dFloat);
+
+   if (Pos('.', szFloat) > 0) then
+   begin
+   	Result := Copy(szFloat, 1, Pos('.', szFloat) - 1) + '%';
+   end else
+   begin
+      Result := szFloat + '%';
+   end;
+end;
+
+end.
