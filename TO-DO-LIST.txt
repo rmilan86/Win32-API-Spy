@@ -1,0 +1,8 @@
+
+- Create a function that just saves each API entry to the save-file rather than the array in memory.
+- Add a function that also counts the entries before loading them through the file.                  
+- Fix ColorSpy as it doesn't currently work properly
+- Create PLUGIN API in DLL Format
+- Create Code Generator file format
+- Create a interaction between code generator files and plugin dlls
+- Complete Preferences to work with features of the program

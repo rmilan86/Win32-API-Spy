@@ -1,0 +1,69 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <ProjectGuid>{9a982951-4cf4-4ddf-8d8b-6fae8d8128d8}</ProjectGuid>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <DCC_DCCCompiler>DCC32</DCC_DCCCompiler>
+    <DCC_DependencyCheckOutputName>Debug\Win32_API_Spy.exe</DCC_DependencyCheckOutputName>
+    <MainSource>Win32_API_Spy.dpr</MainSource>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <Version>7.0</Version>
+    <DCC_DebugInformation>False</DCC_DebugInformation>
+    <DCC_LocalDebugSymbols>False</DCC_LocalDebugSymbols>
+    <DCC_SymbolReferenceInfo>0</DCC_SymbolReferenceInfo>
+    <DCC_Define>RELEASE</DCC_Define>
+    <DCC_ExeOutput>\Release</DCC_ExeOutput>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <Version>7.0</Version>
+    <DCC_Define>DEBUG</DCC_Define>
+    <DCC_ExeOutput>Debug\</DCC_ExeOutput>
+    <DCC_BplOutput>\Debug</DCC_BplOutput>
+    <DCC_FullBooleanEvaluations>True</DCC_FullBooleanEvaluations>
+    <DCC_IntegerOverflowCheck>True</DCC_IntegerOverflowCheck>
+    <DCC_RangeChecking>True</DCC_RangeChecking>
+  </PropertyGroup>
+  <ProjectExtensions>
+    <Borland.Personality>Delphi.Personality</Borland.Personality>
+    <Borland.ProjectType />
+    <BorlandProject>
+<BorlandProject><Delphi.Personality><Parameters><Parameters Name="UseLauncher">False</Parameters><Parameters Name="LoadAllSymbols">True</Parameters><Parameters Name="LoadUnspecifiedSymbols">False</Parameters></Parameters><VersionInfo><VersionInfo Name="IncludeVerInfo">True</VersionInfo><VersionInfo Name="AutoIncBuild">True</VersionInfo><VersionInfo Name="MajorVer">0</VersionInfo><VersionInfo Name="MinorVer">0</VersionInfo><VersionInfo Name="Release">0</VersionInfo><VersionInfo Name="Build">13</VersionInfo><VersionInfo Name="Debug">True</VersionInfo><VersionInfo Name="PreRelease">False</VersionInfo><VersionInfo Name="Special">False</VersionInfo><VersionInfo Name="Private">False</VersionInfo><VersionInfo Name="DLL">False</VersionInfo><VersionInfo Name="Locale">1033</VersionInfo><VersionInfo Name="CodePage">1252</VersionInfo></VersionInfo><VersionInfoKeys><VersionInfoKeys Name="CompanyName">M-TechMedia .Inc</VersionInfoKeys><VersionInfoKeys Name="FileDescription"></VersionInfoKeys><VersionInfoKeys Name="FileVersion">0.0.0.13</VersionInfoKeys><VersionInfoKeys Name="InternalName"></VersionInfoKeys><VersionInfoKeys Name="LegalCopyright"></VersionInfoKeys><VersionInfoKeys Name="LegalTrademarks"></VersionInfoKeys><VersionInfoKeys Name="OriginalFilename"></VersionInfoKeys><VersionInfoKeys Name="ProductName"></VersionInfoKeys><VersionInfoKeys Name="ProductVersion">1.0.0.0</VersionInfoKeys><VersionInfoKeys Name="Comments"></VersionInfoKeys></VersionInfoKeys><Source><Source Name="MainSource">Win32_API_Spy.dpr</Source></Source><Excluded_Packages></Excluded_Packages></Delphi.Personality><ModelSupport>False</ModelSupport></BorlandProject></BorlandProject>
+  </ProjectExtensions>
+  <Import Project="$(MSBuildBinPath)\Borland.Delphi.Targets" />
+  <ItemGroup>
+    <DelphiCompile Include="Win32_API_Spy.dpr">
+      <MainSource>MainSource</MainSource>
+    </DelphiCompile>
+    <DCCReference Include="forms\uAdvWinInfo.pas">
+      <Form>frmAdvWinInfo</Form>
+    </DCCReference>
+    <DCCReference Include="forms\uCodeGen.pas">
+      <Form>frmCodeGen</Form>
+    </DCCReference>
+    <DCCReference Include="forms\uColorSpy.pas">
+      <Form>frmColorSpy</Form>
+    </DCCReference>
+    <DCCReference Include="forms\uMain.pas">
+      <Form>frmMain</Form>
+    </DCCReference>
+    <DCCReference Include="forms\uModifyReport.pas">
+      <Form>frmModifyReport</Form>
+    </DCCReference>
+    <DCCReference Include="forms\uPreferences.pas">
+      <Form>frmPreferences</Form>
+    </DCCReference>
+    <DCCReference Include="forms\uReport.pas">
+      <Form>frmReports</Form>
+    </DCCReference>
+    <DCCReference Include="forms\uReportLoad.pas">
+      <Form>frmReportsLoad</Form>
+    </DCCReference>
+    <DCCReference Include="forms\uSplash.pas">
+      <Form>frmSplash</Form>
+    </DCCReference>
+    <DCCReference Include="includes\uApiSpy.pas" />
+    <DCCReference Include="includes\uGlobals.pas" />
+  </ItemGroup>
+</Project>
