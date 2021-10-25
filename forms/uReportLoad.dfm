@@ -1,0 +1,69 @@
+object frmReportsLoad: TfrmReportsLoad
+  Left = 0
+  Top = 0
+  BorderIcons = []
+  BorderStyle = bsNone
+  ClientHeight = 200
+  ClientWidth = 404
+  Color = clBtnFace
+  Font.Charset = DEFAULT_CHARSET
+  Font.Color = clWindowText
+  Font.Height = -11
+  Font.Name = 'Tahoma'
+  Font.Style = []
+  FormStyle = fsStayOnTop
+  OldCreateOrder = False
+  Position = poScreenCenter
+  OnCreate = FormCreate
+  PixelsPerInch = 96
+  TextHeight = 13
+  object Bevel1: TBevel
+    Left = 0
+    Top = 0
+    Width = 313
+    Height = 65
+    Shape = bsFrame
+  end
+  object lblReport: TLabel
+    Left = 8
+    Top = 16
+    Width = 265
+    Height = 13
+    AutoSize = False
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = 13977088
+    Font.Height = -11
+    Font.Name = 'Tahoma'
+    Font.Style = []
+    ParentFont = False
+  end
+  object lblPercent: TLabel
+    Left = 279
+    Top = 36
+    Width = 20
+    Height = 13
+    Caption = '0%'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clGreen
+    Font.Height = -11
+    Font.Name = 'Tahoma'
+    Font.Style = [fsBold]
+    ParentFont = False
+  end
+  object Shape1: TShape
+    Left = 0
+    Top = 0
+    Width = 313
+    Height = 65
+    Brush.Style = bsClear
+    Pen.Color = clActiveBorder
+    Pen.Style = psInsideFrame
+  end
+  object PBar: TProgressBar
+    Left = 8
+    Top = 35
+    Width = 265
+    Height = 18
+    TabOrder = 0
+  end
+end
