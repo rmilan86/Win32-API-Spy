@@ -1,0 +1,107 @@
+unit uCodeGenerator;
+
+interface
+
+uses
+  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
+  Dialogs, StdCtrls, ExtCtrls;
+
+const
+	crMyCursor = 1; // Custom Cursor
+
+type
+  TfrmCodeGenerator = class(TForm)
+    imgIcon: TImage;
+    Label3: TLabel;
+    Label4: TLabel;
+    Label5: TLabel;
+    Shape1: TShape;
+    imgSpy: TImage;
+    Label1: TLabel;
+    memCode: TMemo;
+    lblViewOptions: TLabel;
+    procedure FormCreate(Sender: TObject);
+    procedure imgSpyMouseDown(Sender: TObject; Button: TMouseButton;
+      Shift: TShiftState; X, Y: Integer);
+    procedure imgSpyMouseUp(Sender: TObject; Button: TMouseButton;
+      Shift: TShiftState; X, Y: Integer);
+    procedure imgSpyMouseMove(Sender: TObject; Shift: TShiftState; X,
+      Y: Integer);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  frmCodeGenerator : TfrmCodeGenerator;
+  bEnabled         : Boolean;
+  
+implementation
+
+{$R *.dfm}
+
+procedure TfrmCodeGenerator.FormCreate(Sender: TObject);
+begin
+	{ Load Cursor }
+	Screen.Cursors[crMyCursor] := LoadCursor(HInstance, 'SPYCUR');
+
+   { Were not spying }
+   bEnabled := false;
+
+   { Load spy icon }
+   imgSpy.Picture.Icon := imgIcon.Picture.Icon;
+end;
+
+procedure TfrmCodeGenerator.imgSpyMouseDown(Sender: TObject;
+  Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
+var
+	Icon : TIcon;
+begin
+	if (Button <> mbLeft) then exit;
+
+	{ Create a blank icon }
+	Icon := TIcon.Create;
+
+	{ Set spy cursor }
+	Screen.Cursor := crMyCursor;
+
+   { Remove the icon from the image control }
+   imgSpy.Picture.Icon := Icon;
+
+   { Set to true, were spying }
+	bEnabled := true;
+
+   { Free object }
+   Icon.Free;
+end;
+
+procedure TfrmCodeGenerator.imgSpyMouseMove(Sender: TObject; Shift: TShiftState;
+  X, Y: Integer);
+begin
+	if (bEnabled = True) then
+   begin
+      // retreive handle :)
+   end;
+end;
+
+procedure TfrmCodeGenerator.imgSpyMouseUp(Sender: TObject; Button: TMouseButton;
+  Shift: TShiftState; X, Y: Integer);
+begin
+	if (Button <> mbLeft) then exit;
+
+	{ Set to false, were no longer spying }
+	bEnabled := false;
+
+   { Set the cursor back to normal }
+	Screen.Cursor := crDefault;
+
+   { Load spy icon }
+   imgSpy.Picture.Icon := imgIcon.Picture.Icon;
+
+   { Generate Code }
+
+   { If a plugin was selected process it }
+end;
+
+end.

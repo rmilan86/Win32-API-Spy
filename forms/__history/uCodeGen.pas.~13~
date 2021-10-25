@@ -1,0 +1,202 @@
+unit uCodeGen;
+
+interface
+
+uses
+  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
+  Dialogs, StdCtrls, ExtCtrls, ImgList;
+
+
+const
+	crMyCursor = 1; // Custom Cursor
+
+type
+  TfrmCodeGen = class(TForm)
+    imgIcon: TImage;
+    imgList: TImageList;
+    Label3: TLabel;
+    Label4: TLabel;
+    Label5: TLabel;
+    Shape1: TShape;
+    imgSpy: TImage;
+    ComboBox1: TComboBox;
+    txtCode: TMemo;
+    Label1: TLabel;
+    procedure FormCreate(Sender: TObject);
+    procedure imgSpyMouseDown(Sender: TObject; Button: TMouseButton;
+      Shift: TShiftState; X, Y: Integer);
+    procedure imgSpyMouseMove(Sender: TObject; Shift: TShiftState; X,
+      Y: Integer);
+    procedure imgSpyMouseUp(Sender: TObject; Button: TMouseButton;
+      Shift: TShiftState; X, Y: Integer);
+  private
+    { Private declarations }
+    //procedure GenerateCode();
+  public
+    { Public declarations }
+  end;
+
+var
+   frmCodeGen: TfrmCodeGen;
+   bEnabled : Boolean;
+
+
+implementation
+
+uses
+   uApiSpy;
+
+{$R *.dfm}
+
+procedure TfrmCodeGen.FormCreate(Sender: TObject);
+begin
+	Screen.Cursors[crMyCursor] := LoadCursor(HInstance, 'SPYCUR');
+
+   { Were not spying }
+   bEnabled := false;
+
+   { Load spy icon }
+   imgSpy.Picture.Icon := imgIcon.Picture.Icon;
+end;
+
+procedure TfrmCodeGen.imgSpyMouseDown(Sender: TObject; Button: TMouseButton;
+  Shift: TShiftState; X, Y: Integer);
+var
+	Icon : TIcon;
+begin
+	if (Button <> mbLeft) then exit;
+
+	{ Create a blank icon }
+	Icon := TIcon.Create;
+
+	{ Set spy cursor }
+	Screen.Cursor := crMyCursor;
+
+   { Remove the icon from the image control }
+   imgSpy.Picture.Icon := Icon;
+
+   { Set to true, were spying }
+	bEnabled := true;
+
+   { Free object }
+   Icon.Free;
+end;
+
+procedure TfrmCodeGen.imgSpyMouseMove(Sender: TObject; Shift: TShiftState; X, Y: Integer);
+begin
+	if (bEnabled = true) then
+   begin
+   	GetApiInfo();
+   end;
+end;
+
+procedure TfrmCodeGen.imgSpyMouseUp(Sender: TObject; Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
+   procedure Add(s : String);
+   begin
+      txtCode.Lines.Add(s);
+   end;
+begin
+	if (Button <> mbLeft) then exit;
+
+	{ Set to false, were no longer spying }
+	bEnabled := false;
+
+   { Set the cursor back to normal }
+	Screen.Cursor := crDefault;
+
+   { Load spy icon }
+   imgSpy.Picture.Icon := imgIcon.Picture.Icon;
+
+   { Format data for display }
+   with ApiInfo do
+   begin
+      { Window Handle }
+      Add('Handle: ' + IntToStr(wHandle) + ' ');
+
+      if (wHandle <> 0) then
+      begin
+         { Check and fix length for window classname }
+         if (Length(wClassN) <> 0) then
+         begin
+            if (Length(wClassN) > 24) then
+            begin
+               Add('Handle: ' + Copy(wClassN, 1, 24) + ' ');
+            end else
+            begin
+               Add('Handle: ' + wClassN + ' ');
+            end;
+         end else
+         begin
+            Add('Handle: ' + 'No classname was found.' + ' ');
+         end;
+
+         { Check and fix length for window text }
+         if (Length(wText) <> 0) then
+         begin
+            if (Length(wText) > 24) then
+            begin
+               //lblwText.Caption := #34 + Copy(wText, 1, 22) + '...' + #34 + ' ';
+            end else
+            begin
+               //lblwText.Caption := #34 + wText + #34 + ' ';
+            end;
+         end else
+         begin
+            //lblwText.Caption := #34 + 'No text was found.' + #34 + ' ';
+         end;
+         ///////////////////////////////////////////
+
+         { Parent Handle }
+         //lblpHandle.Caption := IntToStr(pHandle) + ' ';
+
+         if (pHandle <> 0) then
+         begin
+            { Check and fix length for parent classname }
+            if (Length(pClassN) <> 0) then
+            begin
+               if (Length(pClassN) > 24) then
+               begin
+                  //lblpClass.Caption := #34 + Copy(pClassN, 1, 24) + '...' + #34 + ' ';
+               end else
+               begin
+                  //lblpClass.Caption := #34 + pClassN + #34 + ' ';
+               end;
+            end else
+            begin
+               //lblpClass.Caption := #34 + 'No classname was found.' + #34 + ' ';
+            end;
+
+            { Check and fix length for parent text }
+            if (Length(pText) <> 0) then
+            begin
+               if (Length(pText) > 24) then
+               begin
+                  //lblpText.Caption := #34 + Copy(pText, 1, 22) + '...' + #34 + ' ';
+               end else
+               begin
+                  //lblpText.Caption := #34 + pText + #34 + ' ';
+               end;
+            end else
+            begin
+               // lblpText.Caption := #34 + 'No text was found.' + #34 + ' ';
+            end;
+         end else
+         begin
+            //lblpHandle.Caption := IntToStr(0) + ' ';
+            //lblpClass.Caption := #34 + 'No classname was found.' + #34 + ' ';
+            //lblpText.Caption := #34 + 'No text was found.' + #34 + ' ';
+         end;
+      end else
+      begin
+         //lblwHandle.Caption := IntToStr(0) + ' ';
+         //lblwClass.Caption := #34 + 'No classname was found.' + #34 + ' ';
+         //lblwText.Caption := #34 + 'No text was found.' + #34 + ' ';
+
+         //lblpHandle.Caption := IntToStr(0) + ' ';
+         //lblpClass.Caption := #34 + 'No classname was found.' + #34 + ' ';
+         //lblpText.Caption := #34 + 'No text was found.' + #34 + ' ';
+      end;
+   end;
+end;
+
+end.
